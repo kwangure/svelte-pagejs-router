@@ -1,0 +1,17 @@
+{
+  "name": "@deimimi/svelte-pagejs-router",
+  "version": "0.0.1",
+  "description": "A light wrapper on page.js for Svelte apps.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Kafungo Wangure",
+  "dependencies": {
+    "page": "^1.11.6"
+  },
+  "devDependencies": {
+    "standard-version": "^8.0.0"
+  }
+}
