@@ -13,7 +13,12 @@ export function parseQuery(search) {
     return query;
 }
 
-export default function sveltePageJsRouter(App, routes, hashbang = false) {
+export default function sveltePageJsRouter(App, routes, {
+    target = document.body,
+    hydrate = false,
+    hashbang = false,
+    intro = false,
+}) {
     let rootComponent;
 
     // Render component if route matches
@@ -34,10 +39,11 @@ export default function sveltePageJsRouter(App, routes, hashbang = false) {
     page({ hashbang });
 
     function makeInitialRender(props) {
-        let target = document.body;
         rootComponent = new App({
             target,
             props,
+            hydrate,
+            intro,
         });
     }
 
