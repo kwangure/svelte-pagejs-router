@@ -18,7 +18,7 @@ export default function sveltePageJsRouter(App, routes, {
     hydrate = false,
     hashbang = false,
     intro = false,
-}) {
+} = {}) {
     let rootComponent;
 
     // Render component if route matches
