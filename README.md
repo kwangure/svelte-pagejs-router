@@ -8,7 +8,7 @@ npm i @deimimi/svelte-pagejs-router
 ## Usage
 ```javascript
 /**--- main.js ---**/
-import root from "./root.svelte"; // the root of your component
+import root from "./root.svelte"; // the root of your app
 import router from "@deimimi/svelte-pagejs-router";
 
 const routes = [
@@ -51,7 +51,7 @@ router(root, routes)
 ### router(root, routes, options?)
 Returns `undefined`.
 
-#### route
+#### root
 A `SvelteCompnent` with the following props: 
 - `error: boolean` - Whether to render the error page
 - `status: number` - What the request status was
