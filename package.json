@@ -1,6 +1,6 @@
 {
   "name": "@deimimi/svelte-pagejs-router",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A light wrapper on page.js for Svelte apps.",
   "main": "index.js",
   "type": "module",

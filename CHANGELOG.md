@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://github.com/deimimi/svelte-pagejs-router/compare/v0.0.1...v0.1.0) (2020-07-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* Options are now the third argument (an Object)
+
+### Features
+
+* add `target`, `hydrate` and `intro` options ([0fc9c65](https://github.com/deimimi/svelte-pagejs-router/commit/0fc9c652b6974b37b5bc309ee7e8d4e4e4a42c13))
+
+
+### Bug Fixes
+
+* explicity label as type module ([0e9e9fb](https://github.com/deimimi/svelte-pagejs-router/commit/0e9e9fbda319187c54eacb5a1f2e18927f41c748))
+
 ### 0.0.1 (2020-07-06)
 
 
