@@ -18,9 +18,12 @@ export default function sveltePageJsRouter(App, routes, {
     hydrate = false,
     hashbang = false,
     intro = false,
+    base = "",
 } = {}) {
     let rootComponent;
-
+    if (base) {
+        page.base(base);
+    }
     // Render component if route matches
     routes.forEach(route => {
         page(route.path, ctx => navigate(route, ctx));
