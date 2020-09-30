@@ -51,14 +51,29 @@ export default function sveltePageJsRouter(App, routes, {
     }
 
     async function navigate(route, context) {
+        const component = await route.component();
         let props = {
-            component: (await route.component()).default,
+            component: component.default,
             path: route.path,
             params: context.params,
             query: parseQuery(location.search),
             error: false,
             status: 200,
         };
+
+        if(component.preload) {
+            if (typeof component.preload === "function") {
+                let preload = await component.preload();
+                
+                if(Object.prototype.toString.call(preload) !== "[object Object]") {
+                    throw Error(`Result from "preload" function must of type Object -> "{}"`);
+                }
+
+                props = { ...props, preload }
+            } else if (import.meta.env.DEV) {
+                throw Error(`Exported "preload" must be a function`);
+            }
+        }
 
         if (rootComponent) {
             rootComponent.$set(props);
