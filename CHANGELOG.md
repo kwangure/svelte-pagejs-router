@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/deimimi/svelte-pagejs-router/compare/v0.1.3...v0.1.4) (2020-10-12)
+
+
+### Features
+
+* pass params and query to preload ([604fc65](https://github.com/deimimi/svelte-pagejs-router/commit/604fc65d9fa7578a020e04ca844a0907f4c33cfb))
+
 ### [0.1.3](https://github.com/deimimi/svelte-pagejs-router/compare/v0.1.2...v0.1.3) (2020-09-30)
 
 
