@@ -52,18 +52,20 @@ export default function sveltePageJsRouter(App, routes, {
 
     async function navigate(route, context) {
         const component = await route.component();
+        const { params } = context;
+        const query = parseQuery(location.search);
         let props = {
             component: component.default,
             path: route.path,
-            params: context.params,
-            query: parseQuery(location.search),
+            params,
+            query,
             error: false,
             status: 200,
         };
 
         if(component.preload) {
             if (typeof component.preload === "function") {
-                let preload = await component.preload();
+                let preload = await component.preload({ params, query });
                 
                 if(Object.prototype.toString.call(preload) !== "[object Object]") {
                     throw Error(`Result from "preload" function must of type Object -> "{}"`);
