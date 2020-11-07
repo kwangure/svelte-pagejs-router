@@ -1,3 +1,4 @@
+import { assertIsFunction, assertIsObject, isPlainObject } from "./util.js";
 import page from "page";
 
 export function parseQuery(search) {
@@ -52,7 +53,8 @@ export default function sveltePageJsRouter(App, routes, {
 
     async function navigate(route, context) {
         const component = await route.component();
-        const { params } = context;
+        const { params, state: { historyContext } } = context;
+
         const query = parseQuery(location.search);
         let props = {
             component: component.default,
@@ -63,18 +65,14 @@ export default function sveltePageJsRouter(App, routes, {
             status: 200,
         };
 
-        if(component.preload) {
-            if (typeof component.preload === "function") {
-                let preload = await component.preload({ params, query });
-                
-                if(Object.prototype.toString.call(preload) !== "[object Object]") {
-                    throw Error(`Result from "preload" function must of type Object -> "{}"`);
-                }
+        if (component.preload) {
+            assertIsFunction(component.preload, "Exported 'preload' must be a function");
 
-                props = { ...props, preload }
-            } else if (import.meta.env.DEV) {
-                throw Error(`Exported "preload" must be a function`);
-            }
+            const preload = await component.preload({ historyContext, params, query });
+
+            assertIsObject(preload, "Result from 'preload' must an 'Object'");
+
+            props = { ...props, preload };
         }
 
         if (rootComponent) {
@@ -82,5 +80,16 @@ export default function sveltePageJsRouter(App, routes, {
         } else {
             makeInitialRender(props);
         }
+
+        rootComponent.$on("navigate", (e) => {
+            const eventValue = e.detail;
+
+            if (typeof eventValue === "string") {
+                page.show(eventValue);
+            } else if (isPlainObject(eventValue)) {
+                const { url, context } = eventValue;
+                page.show(url, { historyContext: context })
+            }
+        });
     }
 }
