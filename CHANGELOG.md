@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/deimimi/svelte-pagejs-router/compare/v0.1.5...v0.1.6) (2020-12-28)
+
+
+### Features
+
+* pass context to 404 requests ([cd8319c](https://github.com/deimimi/svelte-pagejs-router/commit/cd8319c5c4b1cc4bdf0caca4c0a059bc7498533c))
+
 ### [0.1.5](https://github.com/deimimi/svelte-pagejs-router/compare/v0.1.4...v0.1.5) (2020-11-07)
 
 
