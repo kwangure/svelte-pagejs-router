@@ -1,10 +1,10 @@
 import { assertIsFunction, assertIsObject, isPlainObject } from "./util.js";
 import page from "page";
 
-export function parseQuery(search) {
+export function parseQuery(querystring) {
     const query = Object.create(null);
-    if (search.length > 0) {
-        search.slice(1).split("&").forEach(searchParam => {
+    if (querystring.length > 0) {
+        querystring.slice(1).split("&").forEach(searchParam => {
             let [, key, value = ""] = /([^=]*)(?:=(.*))?/.exec(decodeURIComponent(searchParam.replace(/\+/g, " ")));
             if (typeof query[key] === "string") query[key] = [query[key]];
             if (typeof query[key] === "object") (query[key] ).push(value);
@@ -31,8 +31,16 @@ export default function sveltePageJsRouter(App, routes, {
     });
 
     // Error home on 404
-    page("*", function render404() {
-        const props = { error: { message: "Page not found" }, status: 404 };
+    page("*", function render404(context) {
+        const { params, pathname, querystring } = context;
+        const query = parseQuery(querystring);
+        const props = {
+            params,
+            pathname,
+            query,
+            error: { message: "Page not found" },
+            status: 404,
+        };
         if (rootComponent) {
             rootComponent.$set(props);
         } else {
@@ -53,12 +61,12 @@ export default function sveltePageJsRouter(App, routes, {
 
     async function navigate(route, context) {
         const component = await route.component();
-        const { params, state: { historyContext } } = context;
+        const { params, pathname, querystring, state: { historyContext } } = context;
 
-        const query = parseQuery(location.search);
+        const query = parseQuery(querystring);
         let props = {
             component: component.default,
-            path: route.path,
+            pathname,
             params,
             query,
             error: false,
