@@ -57,6 +57,7 @@ export default function sveltePageJsRouter(App, routes, {
             hydrate,
             intro,
         });
+        rootComponent.$on("navigate", handleOnNavigate);
     }
 
     async function navigate(route, context) {
@@ -88,16 +89,16 @@ export default function sveltePageJsRouter(App, routes, {
         } else {
             makeInitialRender(props);
         }
+    }
 
-        rootComponent.$on("navigate", (e) => {
-            const eventValue = e.detail;
+    function handleOnNavigate(e) {
+        const eventValue = e.detail;
 
-            if (typeof eventValue === "string") {
-                page.show(eventValue);
-            } else if (isPlainObject(eventValue)) {
-                const { url, context } = eventValue;
-                page.show(url, { historyContext: context })
-            }
-        });
+        if (typeof eventValue === "string") {
+            page.show(eventValue);
+        } else if (isPlainObject(eventValue)) {
+            const { url, context } = eventValue;
+            page.show(url, { historyContext: context })
+        }
     }
 }
