@@ -1,17 +1,10 @@
 import { assertIsFunction, assertIsObject, isPlainObject } from "./util.js";
 import page from "page";
 
-export function parseQuery(querystring) {
-    const query = Object.create(null);
-    if (querystring.length > 0) {
-        querystring.slice(1).split("&").forEach(searchParam => {
-            let [, key, value = ""] = /([^=]*)(?:=(.*))?/.exec(decodeURIComponent(searchParam.replace(/\+/g, " ")));
-            if (typeof query[key] === "string") query[key] = [query[key]];
-            if (typeof query[key] === "object") (query[key] ).push(value);
-            else query[key] = value;
-        });
-    }
-    return query;
+export function querystingToObject(querystring) {
+    const urlParams = new URLSearchParams(querystring);
+    const params = Object.fromEntries(urlParams);
+    return params;
 }
 
 export default function sveltePageJsRouter(App, routes, {
@@ -33,7 +26,7 @@ export default function sveltePageJsRouter(App, routes, {
     // Error home on 404
     page("*", function render404(context) {
         const { params, pathname, querystring } = context;
-        const query = parseQuery(querystring);
+        const query = querystingToObject(querystring);
         const props = {
             params,
             pathname,
@@ -64,7 +57,7 @@ export default function sveltePageJsRouter(App, routes, {
         const component = await route.component();
         const { params, pathname, querystring, state: { historyContext } } = context;
 
-        const query = parseQuery(querystring);
+        const query = querystingToObject(querystring);
         let props = {
             component: component.default,
             pathname,
