@@ -1,5 +1,5 @@
 {
-  "name": "@deimimi/svelte-pagejs-router",
+  "name": "@kwangure/svelte-pagejs-router",
   "version": "0.1.6",
   "description": "A light wrapper on page.js for Svelte apps.",
   "main": "index.js",
