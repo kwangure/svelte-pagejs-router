@@ -17,7 +17,13 @@
   "devDependencies": {
     "standard-version": "^8.0.1"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kwangure/svelte-pagejs-router.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kwangure/svelte-pagejs-router/issues"
+  },
+  "homepage": "https://github.com/kwangure/svelte-pagejs-router#readme"
 }
