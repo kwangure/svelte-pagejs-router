@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/deimimi/svelte-pagejs-router/compare/v0.1.6...v0.1.7) (2021-01-12)
+
+
+### Features
+
+* rename package org ([b275c17](https://github.com/deimimi/svelte-pagejs-router/commit/b275c173d148fbcde5f1162b73c8ffbbc324dfd2))
+
+
+### Bug Fixes
+
+* listen to navigate event on error page as well ([38dd314](https://github.com/deimimi/svelte-pagejs-router/commit/38dd314019544a452298522ced7dfcd777586ff9))
+* reset existing rootComponent preload ([585d861](https://github.com/deimimi/svelte-pagejs-router/commit/585d861544a580c7d579a266a63aa55bab69ca95))
+
 ### [0.1.6](https://github.com/deimimi/svelte-pagejs-router/compare/v0.1.5...v0.1.6) (2020-12-28)
 
 
