@@ -60,9 +60,9 @@ router(root, routes)
         {:catch fetchError}
             <h1>Error displaying {status}</h1>
         {/await}
-	{:else}
-		<svelte:component this={component} {...preload}/>
-	{/if}
+    {:else}
+        <svelte:component this={component} {...preload}/>
+    {/if}
 </Layout>
 ```
 
