@@ -81,7 +81,10 @@ export default function sveltePageJsRouter(App, routes, {
 
             assertIsObject(preload, "Result from 'preload' must an 'Object'");
 
-            props = { ...props, preload };
+            props.preload = preload;
+        } else {
+            // reset existing rootComponent preload
+            props.preload = null;
         }
 
         if (rootComponent) {
