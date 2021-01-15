@@ -25,11 +25,11 @@ export default function sveltePageJsRouter(App, routes, {
 
     // Error home on 404
     page("*", function render404(context) {
-        const { params, pathname, querystring } = context;
+        const { params, routePath, querystring } = context;
         const query = querystingToObject(querystring);
         const props = {
             params,
-            pathname,
+            path: routePath,
             query,
             error: { message: "Page not found" },
             status: 404,
@@ -55,12 +55,12 @@ export default function sveltePageJsRouter(App, routes, {
 
     async function navigate(route, context) {
         const component = await route.component();
-        const { params, pathname, querystring, state: { historyContext } } = context;
+        const { params, routePath, querystring, state: { historyContext } } = context;
 
         const query = querystingToObject(querystring);
         let props = {
             component: component.default,
-            pathname,
+            path: routePath,
             params,
             query,
             error: false,
