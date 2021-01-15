@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/kwangure/svelte-pagejs-router/compare/v0.1.7...v0.2.0) (2021-01-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* This fixes path in hashbang routes where the path
+before the hashbang i.e `index.html#!/path` would show up in the path
+variable. We now read `routePath` instead of `pathname` from page.js's
+context.
+
+### Features
+
+* use `path` prop instead of `pathname` ([3a6111c](https://github.com/kwangure/svelte-pagejs-router/commit/3a6111c29382712cabb5636bd693c169ebd26584))
+
 ### [0.1.7](https://github.com/deimimi/svelte-pagejs-router/compare/v0.1.6...v0.1.7) (2021-01-12)
 
 
