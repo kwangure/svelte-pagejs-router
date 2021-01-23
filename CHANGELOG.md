@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/kwangure/svelte-pagejs-router/compare/v0.2.0...v0.3.0) (2021-01-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* import {navigate} from "@kwangure/svelte-pagejs-router"
+to change routes.
+* only require `error` and `layout` component
+
+### Features
+
+* only require `error` and `layout` component ([306b903](https://github.com/kwangure/svelte-pagejs-router/commit/306b9030b19d0bf98d2147a00940b2b838626db8))
+* use `navigate` function instead of event ([599d1a0](https://github.com/kwangure/svelte-pagejs-router/commit/599d1a0be9d50c3bac71c545924debc979fac159))
+
 ## [0.2.0](https://github.com/kwangure/svelte-pagejs-router/compare/v0.1.7...v0.2.0) (2021-01-15)
 
 
