@@ -1,5 +1,8 @@
 import { assertIsFunction, assertIsObject, isPlainObject } from "./util.js";
 import page from "page";
+import root, { stores } from "./_root.svelte";
+
+export { stores };
 
 export function querystingToObject(querystring) {
     const urlParams = new URLSearchParams(querystring);
@@ -7,12 +10,14 @@ export function querystingToObject(querystring) {
     return params;
 }
 
-export default function sveltePageJsRouter(App, routes, {
+export default function sveltePageJsRouter(routes, {
     target = document.body,
     hydrate = false,
     hashbang = false,
     intro = false,
     base = "",
+    error = () => import("./_error.svelte"),
+    layout = () => import("./_layout.svelte"),
 } = {}) {
     let rootComponent;
     if (base) {
@@ -24,15 +29,18 @@ export default function sveltePageJsRouter(App, routes, {
     });
 
     // Error home on 404
-    page("*", function render404(context) {
+    page("*", async function render404(context) {
         const { params, routePath, querystring } = context;
+        const [component, Layout] = await Promise.all([error(), layout()]);
         const query = querystingToObject(querystring);
         const props = {
-            params,
+            component: component.default,
             path: routePath,
+            params,
             query,
             error: { message: "Page not found" },
             status: 404,
+            layout: Layout.default,
         };
         if (rootComponent) {
             rootComponent.$set(props);
@@ -44,7 +52,7 @@ export default function sveltePageJsRouter(App, routes, {
     page({ hashbang });
 
     function makeInitialRender(props) {
-        rootComponent = new App({
+        rootComponent = new root({
             target,
             props,
             hydrate,
@@ -54,7 +62,7 @@ export default function sveltePageJsRouter(App, routes, {
     }
 
     async function navigate(route, context) {
-        const component = await route.component();
+        const [component, Layout] = await Promise.all([route.component(), layout()]);
         const { params, routePath, querystring, state: { historyContext } } = context;
 
         const query = querystingToObject(querystring);
@@ -65,6 +73,7 @@ export default function sveltePageJsRouter(App, routes, {
             query,
             error: false,
             status: 200,
+            layout: Layout.default,
         };
 
         if (component.preload) {
