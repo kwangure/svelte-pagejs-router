@@ -16,8 +16,8 @@ export default function sveltePageJsRouter(routes, {
     hashbang = false,
     intro = false,
     base = "",
-    error = () => import("./_error.svelte"),
-    layout = () => import("./_layout.svelte"),
+    error: getError = () => import("./_error.svelte"),
+    layout: getLayout = () => import("./_layout.svelte"),
 } = {}) {
     let rootComponent;
     if (base) {
@@ -29,69 +29,49 @@ export default function sveltePageJsRouter(routes, {
     });
 
     // Error home on 404
-    page("*", async function render404(context) {
-        const { params, routePath, querystring } = context;
-        const [component, Layout] = await Promise.all([error(), layout()]);
-        const query = querystingToObject(querystring);
-        const props = {
-            component: component.default,
-            path: routePath,
-            params,
-            query,
-            error: { message: "Page not found" },
-            status: 404,
-            layout: Layout.default,
-        };
-        if (rootComponent) {
-            rootComponent.$set(props);
-        } else {
-            makeInitialRender(props);
-        }
-    });
+    page("*", (ctx) => navigate(null, ctx, true));
 
     page({ hashbang });
 
-    function makeInitialRender(props) {
-        rootComponent = new root({
-            target,
-            props,
-            hydrate,
-            intro,
-        });
-    }
-
-    async function navigate(route, context) {
-        const [component, Layout] = await Promise.all([route.component(), layout()]);
+    async function navigate(route, context, is404) {
         const { params, routePath, querystring, state: { historyContext } } = context;
-
         const query = querystingToObject(querystring);
-        let props = {
-            component: component.default,
-            path: routePath,
-            params,
-            query,
-            error: false,
-            status: 200,
-            layout: Layout.default,
-        };
 
-        if (component.preload) {
-            assertIsFunction(component.preload, "Exported 'preload' must be a function");
-
-            const preload = await component.preload({ historyContext, params, query });
-
-            assertIsObject(preload, "Result from 'preload' must an 'Object'");
-
-            props.preload = preload;
+        let component, layout, error, preload, status;
+        if (is404) {
+            error = { message: "Page not found" };
+            status = 404;
+            [component, layout] = await Promise.all([getError(), getLayout()]);
+            preload = null;
         } else {
-            // reset existing rootComponent preload
-            props.preload = null;
+            error = false;
+            status = 200;
+
+            [component, layout] = await Promise.all([route.component(), getLayout()]);
+            if (component.preload) {
+                assertIsFunction(component.preload, "Exported 'preload' must be a function");
+                preload = await component.preload({ historyContext, params, query });
+                assertIsObject(preload, "Result from 'preload' must an 'Object'");
+            } else {
+                preload = null;
+            }
         }
+
+        const props = {
+            component: component.default,
+            layout: layout.default,
+            path: routePath,
+            params: params,
+            query: query,
+            error: error,
+            status: status,
+            preload: preload,
+        };
 
         if (rootComponent) {
             rootComponent.$set(props);
         } else {
-            makeInitialRender(props);
+            rootComponent = new root({ target, props, hydrate, intro });
         }
     }
 }
