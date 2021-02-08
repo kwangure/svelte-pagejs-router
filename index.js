@@ -1,6 +1,12 @@
 import { assertIsFunction, assertIsObject, isPlainObject } from "./util.js";
 import page from "page";
 import root, { stores } from "./_root.svelte";
+// TODO(kwangure): import `error` and `layout` dynamically down
+// in router options. Dynamic imports don't work well with
+// "rollup-plugin-chrome-extension". It's easier to fix here
+// rather than debug. `error` and `layout` are tiny anyways.
+import error from "./_error.svelte";
+import layout from "./_layout.svelte";
 
 export { stores };
 
@@ -16,8 +22,8 @@ export default function sveltePageJsRouter(routes, {
     hashbang = false,
     intro = false,
     base = "",
-    error: getError = () => import("./_error.svelte"),
-    layout: getLayout = () => import("./_layout.svelte"),
+    error: getError = () => error,
+    layout: getLayout = () => layout,
 } = {}) {
     let rootComponent;
     if (base) {
