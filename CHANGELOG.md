@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.1](https://github.com/kwangure/svelte-pagejs-router/compare/v0.3.0...v0.3.1) (2021-02-08)
+
+
+### Bug Fixes
+
+* bundle default `error` and `layout` ([1155463](https://github.com/kwangure/svelte-pagejs-router/commit/1155463b0dd26dd8e911fca96d1ae70505bbade7))
+
 ## [0.3.0](https://github.com/kwangure/svelte-pagejs-router/compare/v0.2.0...v0.3.0) (2021-01-23)
 
 
