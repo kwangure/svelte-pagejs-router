@@ -57,7 +57,7 @@ export default function sveltePageJsRouter(routes, {
             if (component.preload) {
                 assertIsFunction(component.preload, "Exported 'preload' must be a function");
                 preload = await component.preload({ historyContext, params, query });
-                assertIsObject(preload, "Result from 'preload' must an 'Object'");
+                assertIsObject(preload, "Result from 'preload' must be an 'Object'");
             } else {
                 preload = null;
             }
