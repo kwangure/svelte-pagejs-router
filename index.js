@@ -30,8 +30,8 @@ export default function sveltePageJsRouter(routes, {
         page.base(base);
     }
     // Render component if route matches
-    routes.forEach(route => {
-        page(route.path, ctx => navigate(route, ctx));
+    routes.forEach(({ path, component }) => {
+        page(path, ctx => navigate(component, ctx));
     });
 
     // Error home on 404
@@ -39,7 +39,7 @@ export default function sveltePageJsRouter(routes, {
 
     page({ hashbang });
 
-    async function navigate(route, context, is404) {
+    async function navigate(getComponent, context, is404) {
         const { params, routePath, querystring, state: { historyContext } } = context;
         const query = querystingToObject(querystring);
 
@@ -53,7 +53,7 @@ export default function sveltePageJsRouter(routes, {
             error = false;
             status = 200;
 
-            [component, layout] = await Promise.all([route.component(), getLayout()]);
+            [component, layout] = await Promise.all([getComponent(), getLayout()]);
             if (component.preload) {
                 assertIsFunction(component.preload, "Exported 'preload' must be a function");
                 preload = await component.preload({ historyContext, params, query });
