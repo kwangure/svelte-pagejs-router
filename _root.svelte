@@ -38,7 +38,7 @@
     });
 </script>
 
-<svelte:component this={layout} on:navigate>
+<svelte:component this={layout}>
     {#if error}
         <svelte:component this={component} {error} {status}/>
 	{:else}
